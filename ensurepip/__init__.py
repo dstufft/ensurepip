@@ -63,3 +63,18 @@ def bootstrap(root=None, upgrade=False, user=False, verbosity=0):
     Bootstrap pip into the current Python installation (or the given root
     directory).
     """
+    base_path = os.path.join(
+        os.path.abspath(os.path.dirname(__file__)),
+        "_bundled",
+    )
+
+    with _mount_wheel(SETUPTOOLS_WHEEL, ["setuptools", "pkg_resources"]):
+        with _mount_wheel(PIP_WHEEL, ["pip"]):
+            import pip
+
+            # Install setuptools and pip
+            pip.main([
+                "install", "--use-wheel",
+                "--no-index", "--find-links", base_path,
+                "setuptools", "pip", "-vvvv", "--pre",
+            ])
