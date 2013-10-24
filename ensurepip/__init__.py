@@ -28,6 +28,7 @@ def _mount_wheel(wheel, modules=None):
     # Construct the full path to the wheel file
     wheel_path = os.path.join(
         os.path.abspath(os.path.dirname(__file__)),
+        "_bundled",
         wheel,
     )
 
